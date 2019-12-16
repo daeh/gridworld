@@ -1,60 +1,181 @@
 <html>
-  <head>
+<head>
     <title>Gridworld!</title>
     <script>
-      var module = {exports: {}};
-      var exports = module.exports;
+		var module = {exports: {}};
+		var exports = module.exports;
     </script>
     <script src='../index.js'></script>
     <script>
-      function init() {
+		//map defines the unchanging parameters in the gridworld environment
+		//more specifically, agent position and building position
 
-        var map = [
-          [ 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-          [ 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-          [ 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-          [ 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-          [ 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-          [ 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-          [ 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0 ],
-          [ 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0 ],
-          [ 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0 ],
-          [ 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0 ],
-          [ 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 ],
-          [ 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 ],
-          [ 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 ],
-          [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-          [ 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-          [ 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-        ];
+        function get_map(setid) {
+            const maps = [
+                [
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                ]
+            ];
+            return maps[setid];
+        }
+        function get_trucks(setid) {
+            const trucks = [
+                [
+                    [3, 12, 1],
+                    [4, 1, 17]
+                ]
+            ];
+            return trucks[setid]
+        }
+        function get_agent(setid) {
+            const agents = [
+                [2, 12, 15]
+            ];
+            return agents[setid]
+        }
+        function get_path(setid) {
+            const paths = [
+                [
+                    [north, 2],
+                    [north, 1],
+                    [west, 2],
+                    [west, 1],
+                    [south, 2],
+                    [south, 1],
+                    [east, 2],
+                    [east, 1],
+                ],
+            ];
+            return paths[setid];
+        }
 
-        var canvas = document.getElementById('canvas');
-        var world = new GridWorld(canvas, map[0].length, map.length, {
-          padding       : {top: 10, left: 10, right: 10, bottom: 60},
-          cellSize      : 32,
-          cellSpacing   : 1,
-          resizeCanvas  : true,
-          drawBorder    : true,
-          onclick: function(node) {
-            console.log("you clicked on node: " + node);
-          }
-        });
+        function sumArrays(arr1,arr2) {
+            return arr1.map(function (x, idx) {
+                return x + arr2[idx];
+            });
+        }
 
-        map.forEach(function(row, y) {
-          row.forEach(function(cell, x) {
-            if (cell) {
-              world.setBackgroundColor(x, y, 'black');
-              world.setBlocked(x, y, true);
+        function place_icons(world, mapArray) {
+
+            const number_dict = {
+                2: 'agent2.png',
+                3: 'truck_k.png',
+                4: 'truck_l.png',
+                5: 'truck_m.png',
+                6: 'left.png',
+                7: 'right.png',
+                8: 'down.png',
+                9: 'up.png',
+            };
+
+            mapArray.forEach(function (row, y) {
+                row.forEach(function (cell, x) {
+                    if (cell === 1) {
+                        world.setBackgroundColor(x, y, 'red');
+                        world.setBlocked(x, y, true);
+                    } else {
+                        world.setImageId(x, y, number_dict[cell]);
+                    }
+                })
+            });
+        }
+
+        function north(steps) {
+            return {id:9, coord:[-1 * steps, 0]};
+        }
+        function south(steps) {
+            return {id:8, coord:[1 * steps, 0]};
+        }
+        function east(steps) {
+            return {id:7, coord:[0, 1 * steps]};
+        }
+        function west(steps) {
+            return {id:6, coord:[0, -1 * steps]};
+        }
+
+        function locate_first(mapArray, k) {
+            for (let m = 0; m < mapArray.length; m++) {
+                let n = mapArray[m].indexOf(k);
+                if (n > -1) {
+                    return [m, n];
+                }
             }
-          })
-        })
+        }
 
-        world.draw();
+        function move(mapArray, direction, steps) {
+            let id = 2;
 
-      }
+            let updates = [];
+            let agent_idx0 = locate_first(mapArray, id);
+            updates.push( {id:id, coord:sumArrays(agent_idx0, direction(steps).coord)} );
+
+            for (let iStep = 0; iStep < steps; iStep++) {
+                updates.push( {id:direction(iStep).id, coord:sumArrays(agent_idx0, direction(iStep).coord)} );
+            }
+
+            return updates;
+        }
+
+        function movement(mapArray, direction, steps) {
+            let updates = move(mapArray, direction, steps);
+            updates.forEach(function(update) {
+                mapArray[update.coord[0]][update.coord[1]] = update.id;
+            });
+        }
+
+        function make_world(param) {
+
+            if (typeof param === 'object' && param !== null) {
+                this.mapArray = get_map(param.mapid);
+                this.trucks = get_trucks(param.trucksid);
+                this.agent = get_agent(param.agentid);
+                this.path = get_path(param.pathid);
+                this.step = 0;
+
+                this.canvas = document.getElementById('canvas');
+                this.world = new GridWorld(this.canvas, this.mapArray[0].length, this.mapArray.length, {
+                    padding: {top: 10, left: 10, right: 10, bottom: 60},
+                    cellSize: 62,
+                    cellSpacing: 1,
+                    resizeCanvas: true,
+                    drawBorder: true,
+                    onclick: function (node) {
+                        console.log("you clicked on node: " + node);
+                    }
+                });
+
+                this.mapArray[this.agent[1]][this.agent[2]] = this.agent[0];
+                this.trucks.forEach(function(loc) {
+                    this.mapArray[loc[1]][loc[2]] = loc[0];
+                });
+
+            } else {
+                movement(this.mapArray, ...this.path[this.step]);
+                this.step++;
+            }
+
+            place_icons(this.world, this.mapArray);
+            this.world.draw();
+        }
+
     </script>
-  </head>
-  <body onload='init();'>
-    <canvas id='canvas' width='960' height='640'></canvas>
-  </body>
+</head>
+<body onload="make_world({mapid:0, trucksid:0, agentid:0, pathid:0});">
+<canvas id='canvas' width='960' height='640'></canvas>
+<br><br>
+<button onclick="make_world();">Next Step in Holly's Path</button>
+</body>
 </html>

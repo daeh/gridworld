@@ -11,6 +11,11 @@ function Node(x, y, backgroundColor) {
   this.blocked = false;
 }
 
+function display_img(e) {
+  ctx.drawImage(e.currentTarget, e.currentTarget.cx, e.currentTarget.cy, e.currentTarget.cx1, e.currentTarget.cy1);
+  // console.log(e.currentTarget);
+}
+
 Node.prototype = {
   toString: function() {
     return "<node x=" + this.x + " y=" + this.y + " blocked=" + this.blocked + ">";
@@ -136,16 +141,38 @@ GridWorld.prototype = {
                  ((csz + csp) * this.height) + badj);
 
     var cy = this.padding.top + cadj;
+    
+
+    var img_objs = [];
+
     for (var j = 0; j < this.height; ++j) {
       var cx = this.padding.left + cadj;
       for (var i = 0; i < this.width; ++i) {
         var n = this.nodes[ix++];
         ctx.fillStyle = n.backgroundColor || this.backgroundColor;
         ctx.fillRect(cx, cy, csz, csz);
+
+        
+        if (n.imageId) {
+          console.log(n.imageId)
+          img = new Image();
+          img.src = n.imageId;
+          img.cx = cx;
+          img.cy = cy;
+          img.cx1 = csz;
+          img.cy1 = csz;
+          img.addEventListener('load', display_img, false);
+          img_objs.push(img);
+        }
+
+
         cx += csz + csp;
+
       }
       cy += csz + csp;
     }
+
+    console.log(img_objs);
 
     ctx.restore();
 
@@ -157,6 +184,10 @@ GridWorld.prototype = {
 
   getBackgroundColor: function(x, y) {
     return this.nodes[(y * this.width) + x].backgroundColor;
+  },
+
+  setImageId: function(x, y, img_path) {
+    this.nodes[(y * this.width) + x].imageId = img_path || null;
   },
 
   setBackgroundColor: function(x, y, color) {
